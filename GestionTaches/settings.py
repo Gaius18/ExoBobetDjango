@@ -23,10 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-1p%7gp#+g4-8cyql2r0y&pnav4otsh7+l$0y&62(w3^)r*&m=+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['16.16.200.85']
+import os
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_URL = '/static/'
 
+# Pour utiliser MySQL avec Django
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Application definition
 
