@@ -1,0 +1,15 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond principal -->
+  <rect width="60" height="60" rx="12" fill="#0e5aa7"/>
+  
+  <!-- Éléments décoratifs -->
+  <circle cx="45" cy="15" r="8" fill="#ff7a00" opacity="0.8"/>
+  <circle cx="15" cy="45" r="6" fill="#1f78d1" opacity="0.6"/>
+  
+  <!-- Icône centrale -->
+  <rect x="18" y="18" width="24" height="18" rx="2" fill="white"/>
+  <path d="M20 24h20v1H20v-1zm0 3h18v1H20v-1zm0 3h15v1H20v-1z" fill="#0e5aa7"/>
+  
+  <!-- Texte ESATIC -->
+  <text x="30" y="48" font-family="Arial, sans-serif" font-size="8" font-weight="bold" fill="white" text-anchor="middle">ESATIC</text>
+</svg>

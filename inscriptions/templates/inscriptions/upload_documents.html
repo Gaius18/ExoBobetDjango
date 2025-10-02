@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Documents | ESATIC</title>
+    <link rel="stylesheet" href="{% static 'inscriptions/style.css' %}">
+</head>
+<body>
+    <header class="esatic-header">
+        <div class="container">
+            <div class="brand">
+                <img class="logo" src="{% static 'inscriptions/img/esatic-logo.svg' %}" alt="ESATIC">
+                <div class="brand-text">
+                    <h1>ESATIC</h1>
+                    <p>Documents</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="{% url 'accueil' %}" class="nav-link">Accueil</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <ol class="stepper">
+                <li class="done">Informations</li>
+                <li class="active">Documents</li>
+                <li>Confirmation</li>
+            </ol>
+            <h2 class="section-title">Ajouter vos documents</h2>
+            <p>Numéro d’inscription: <strong>{{ candidat.numero_inscription }}</strong> — {{ candidat.nom }} {{ candidat.prenoms }}</p>
+            <form method="post" enctype="multipart/form-data" class="esatic-form fade-in-up in">
+                {% csrf_token %}
+                <div class="form-grid">
+                    {% for field in form %}
+                        <div class="form-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% for error in field.errors %}<small class="error">{{ error }}</small>{% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">Ajouter</button>
+                    <a href="{% url 'confirmation' candidat.id %}" class="btn cta">Terminer</a>
+                </div>
+            </form>
+        </section>
+
+        <section class="card">
+            <h3 class="section-title">Documents téléchargés</h3>
+            <ul class="concours-list">
+                {% for d in documents %}
+                    <li class="concours-item in">{{ d.get_type_document_display }} — {{ d.fichier.name|slice:'-25:' }}</li>
+                {% empty %}
+                    <li class="concours-item empty">Aucun document pour le moment.</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
+

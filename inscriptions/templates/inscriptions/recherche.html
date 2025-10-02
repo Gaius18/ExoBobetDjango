@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recherche d'inscription | ESATIC</title>
+    <link rel="stylesheet" href="{% static 'inscriptions/style.css' %}">
+</head>
+<body>
+    <header class="esatic-header">
+        <div class="container">
+            <div class="brand">
+                <img class="logo" src="{% static 'inscriptions/img/esatic-logo.svg' %}" alt="ESATIC">
+                <div class="brand-text">
+                    <h1>ESATIC</h1>
+                    <p>Recherche d'inscription</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="{% url 'accueil' %}" class="nav-link">Accueil</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <h2 class="section-title">Rechercher votre inscription</h2>
+            <form method="get" class="esatic-form fade-in-up in">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label for="numero">Numéro d'inscription</label>
+                        <input type="text" name="numero" id="numero" value="{{ numero }}" 
+                               placeholder="Ex: ESATIC-2025-0001" class="form-control">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn primary">Rechercher</button>
+                </div>
+            </form>
+        </section>
+
+        {% if candidat %}
+        <section class="card">
+            <h3 class="section-title">Informations de l'inscription</h3>
+            <div class="grid two">
+                <div>
+                    <p><strong>Numéro:</strong> {{ candidat.numero_inscription }}</p>
+                    <p><strong>Nom et prénoms:</strong> {{ candidat.nom }} {{ candidat.prenoms }}</p>
+                    <p><strong>Email:</strong> {{ candidat.email }}</p>
+                    <p><strong>Concours:</strong> {{ candidat.concours_souhaite.nom }}</p>
+                </div>
+                <div>
+                    <p><strong>Date d'inscription:</strong> {{ candidat.date_inscription|date:'d/m/Y H:i' }}</p>
+                    <p><strong>Statut:</strong> 
+                        {% if candidat.valide %}
+                            <span style="color: #059669;">✓ Validée</span>
+                        {% else %}
+                            <span style="color: #dc2626;">⚠ En attente</span>
+                        {% endif %}
+                    </p>
+                    <div class="form-actions">
+                        <a href="{% url 'confirmation' candidat.id %}" class="btn primary">Voir le reçu</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESATIC | Inscriptions aux Concours</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'inscriptions/style.css' %}">
+</head>
+<body>
+    <header class="esatic-header">
+        <div class="container">
+            <div class="brand">
+                <img class="logo" src="{% static 'inscriptions/img/esatic-logo.svg' %}" alt="Logo ESATIC">
+                <div class="brand-text">
+                    <h1>ESATIC</h1>
+                    <p>Plateforme d’inscription aux concours</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="#concours" class="nav-link">Concours</a>
+                <a href="{% url 'inscription' %}" class="btn primary">S’inscrire</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2 class="hero-title">Rejoignez l’excellence en data et télécoms</h2>
+                <p class="hero-subtitle">Déposez votre candidature en quelques minutes et suivez votre dossier en ligne.</p>
+                <div class="hero-actions">
+                    <a href="{% url 'inscription' %}" class="btn cta">Commencer mon inscription</a>
+                    <a href="#concours" class="btn ghost">Voir les concours</a>
+                </div>
+            </div>
+        </div>
+        <div class="shapes" aria-hidden="true"></div>
+    </section>
+
+    <main class="container" id="concours">
+        <section class="card">
+            <h3 class="section-title">Concours disponibles</h3>
+            <ul class="concours-list">
+                {% for c in concours %}
+                    <li class="concours-item fade-in-up" style="--i: {{ forloop.counter }}">
+                        <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                            <div>
+                                <div style="font-weight:600;">{{ c.nom }}</div>
+                                <small style="color:#475569;">Niveau: {{ c.get_niveau_requis_display }} • Clôture: {{ c.date_limite|date:'d/m/Y' }}</small>
+                            </div>
+                            <a class="btn primary" href="{% url 'inscription_prefilled' c.id %}">S’inscrire</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li class="concours-item empty">Aucun concours disponible pour le moment.</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3 class="section-title">Préparez votre dossier</h3>
+            <div class="grid two">
+                <div>
+                    <ul class="checklist">
+                        <li>Extrait de naissance</li>
+                        <li>Certificat de scolarité</li>
+                        <li>Lettre de motivation</li>
+                        <li>Diplôme ou relevés</li>
+                        <li>Photo d’identité</li>
+                    </ul>
+                </div>
+                <div class="info">
+                    <p>Scannez vos documents au format PDF ou image (JPEG/PNG). La taille maximale par fichier est de 5 Mo.</p>
+                    <a class="btn primary" href="{% url 'inscription' %}">Je commence</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© {{ now|date:'Y' }} ESATIC — École Supérieure Africaine des TIC</p>
+        </div>
+    </footer>
+
+    <script>
+    // légère animation au scroll
+    const onScroll = () => {
+        document.querySelectorAll('.fade-in-up').forEach((el) => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 60) {
+                el.classList.add('in');
+            }
+        });
+    };
+    document.addEventListener('scroll', onScroll);
+    window.addEventListener('load', onScroll);
+    </script>
+</body>
+</html>

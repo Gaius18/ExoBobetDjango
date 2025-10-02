@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inscription | ESATIC</title>
+    <link rel="stylesheet" href="{% static 'inscriptions/style.css' %}">
+</head>
+<body>
+    <header class="esatic-header">
+        <div class="container">
+            <div class="brand">
+                <img class="logo" src="{% static 'inscriptions/img/esatic-logo.svg' %}" alt="ESATIC">
+                <div class="brand-text">
+                    <h1>ESATIC</h1>
+                    <p>Inscription</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="{% url 'accueil' %}" class="nav-link">Accueil</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="card">
+            <ol class="stepper">
+                <li class="active">Informations</li>
+                <li>Documents</li>
+                <li>Confirmation</li>
+            </ol>
+            <h2 class="section-title">Formulaire d’inscription</h2>
+            <form method="post" class="esatic-form fade-in-up in">
+                {% csrf_token %}
+                <div class="form-grid">
+                    {% for field in form %}
+                        <div class="form-field">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}<small class="help">{{ field.help_text }}</small>{% endif %}
+                            {% for error in field.errors %}<small class="error">{{ error }}</small>{% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-actions">
+                    <a href="{% url 'accueil' %}" class="btn ghost">Annuler</a>
+                    <button type="submit" class="btn primary">Continuer</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+    // focus and floating labels lite
+    document.querySelectorAll('.esatic-form input, .esatic-form select, .esatic-form textarea').forEach((el)=>{
+        el.addEventListener('focus',()=> el.closest('.form-field')?.classList.add('focus'));
+        el.addEventListener('blur',()=> el.closest('.form-field')?.classList.remove('focus'));
+    });
+    </script>
+</body>
+</html>
+

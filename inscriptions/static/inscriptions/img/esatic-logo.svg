@@ -1,0 +1,22 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond principal -->
+  <rect width="120" height="120" rx="20" fill="#0e5aa7"/>
+  
+  <!-- Éléments décoratifs -->
+  <circle cx="90" cy="30" r="15" fill="#ff7a00" opacity="0.8"/>
+  <circle cx="30" cy="90" r="12" fill="#1f78d1" opacity="0.6"/>
+  
+  <!-- Icône centrale - Livre/Formation -->
+  <rect x="35" y="35" width="50" height="35" rx="4" fill="white"/>
+  <path d="M40 45h40v2H40v-2zm0 6h35v2H40v-2zm0 6h30v2H40v-2zm0 6h25v2H40v-2z" fill="#0e5aa7"/>
+  
+  <!-- Icône réseau/technologie -->
+  <circle cx="45" cy="25" r="3" fill="white"/>
+  <circle cx="60" cy="20" r="3" fill="white"/>
+  <circle cx="75" cy="25" r="3" fill="white"/>
+  <path d="M45 25L60 20M60 20L75 25" stroke="white" stroke-width="1.5"/>
+  
+  <!-- Texte ESATIC -->
+  <text x="60" y="90" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">ESATIC</text>
+  <text x="60" y="105" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle" opacity="0.9">École Supérieure Africaine des TIC</text>
+</svg>

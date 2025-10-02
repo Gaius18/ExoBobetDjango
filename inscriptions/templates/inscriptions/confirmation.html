@@ -1,0 +1,385 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reçu d'inscription | ESATIC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'inscriptions/style.css' %}">
+    <style>
+    .receipt-container {
+        max-width: 800px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(14, 90, 167, 0.15);
+        overflow: hidden;
+    }
+    
+    .receipt-header {
+        background: linear-gradient(135deg, #0e5aa7 0%, #1f78d1 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .receipt-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        animation: float 20s linear infinite;
+    }
+    
+    .receipt-logo {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+    
+    .receipt-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 8px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .receipt-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+        margin: 0;
+        font-weight: 300;
+    }
+    
+    .receipt-body {
+        padding: 40px;
+    }
+    
+    .receipt-number {
+        text-align: center;
+        background: linear-gradient(135deg, #f0f6ff 0%, #e0f0ff 100%);
+        border: 2px solid #0e5aa7;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .receipt-number h2 {
+        color: #0e5aa7;
+        font-size: 24px;
+        margin: 0 0 8px;
+        font-weight: 600;
+    }
+    
+    .receipt-number .number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #0e5aa7;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 2px;
+    }
+    
+    .info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .info-section {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 20px;
+        border-left: 4px solid #0e5aa7;
+    }
+    
+    .info-section h3 {
+        color: #0e5aa7;
+        font-size: 18px;
+        margin: 0 0 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .info-item {
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .info-label {
+        font-weight: 500;
+        color: #475569;
+        min-width: 120px;
+    }
+    
+    .info-value {
+        font-weight: 600;
+        color: #0f172a;
+        text-align: right;
+    }
+    
+    .documents-section {
+        background: #f0fdf4;
+        border-radius: 12px;
+        padding: 20px;
+        border-left: 4px solid #22c55e;
+        margin-bottom: 30px;
+    }
+    
+    .documents-section h3 {
+        color: #166534;
+        font-size: 18px;
+        margin: 0 0 15px;
+        font-weight: 600;
+    }
+    
+    .document-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .document-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 0;
+        border-bottom: 1px solid rgba(34, 197, 94, 0.1);
+    }
+    
+    .document-item:last-child {
+        border-bottom: none;
+    }
+    
+    .document-icon {
+        width: 20px;
+        height: 20px;
+        background: #22c55e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .status-section {
+        text-align: center;
+        background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+        border-radius: 12px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 2px solid #22c55e;
+    }
+    
+    .status-icon {
+        width: 60px;
+        height: 60px;
+        background: #22c55e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 15px;
+        color: white;
+        font-size: 24px;
+    }
+    
+    .status-text {
+        font-size: 20px;
+        font-weight: 600;
+        color: #166534;
+        margin: 0;
+    }
+    
+    .footer-info {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        color: #64748b;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    
+    .actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+    
+    @media print {
+        .no-print { display: none !important; }
+        .receipt-container { 
+            box-shadow: none !important; 
+            border-radius: 0 !important;
+            margin: 0 !important;
+            max-width: none !important;
+        }
+        .receipt-header { 
+            background: #0e5aa7 !important;
+            -webkit-print-color-adjust: exact;
+            color-adjust: exact;
+        }
+        body { background: white !important; }
+        .info-grid { grid-template-columns: 1fr !important; }
+    }
+    
+    @keyframes float {
+        0% { transform: translateX(0) translateY(0) rotate(0deg); }
+        33% { transform: translateX(30px) translateY(-30px) rotate(120deg); }
+        66% { transform: translateX(-20px) translateY(20px) rotate(240deg); }
+        100% { transform: translateX(0) translateY(0) rotate(360deg); }
+    }
+    </style>
+    <script>
+    function printReceipt() { 
+        window.print(); 
+    }
+    
+    function downloadPDF() {
+        // Fonction pour télécharger en PDF (nécessiterait une bibliothèque comme jsPDF)
+        alert('Fonctionnalité de téléchargement PDF à implémenter');
+    }
+    </script>
+</head>
+<body>
+    <header class="esatic-header no-print">
+        <div class="container">
+            <div class="brand">
+                <img class="logo" src="{% static 'inscriptions/img/esatic-logo-small.svg' %}" alt="ESATIC">
+                <div class="brand-text">
+                    <h1>ESATIC</h1>
+                    <p>Confirmation d'inscription</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <a href="{% url 'accueil' %}" class="nav-link">Accueil</a>
+                <a href="{% url 'recherche_inscription' %}" class="nav-link">Rechercher</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="receipt-container">
+            <!-- En-tête du reçu -->
+            <div class="receipt-header">
+                <img src="{% static 'inscriptions/img/esatic-logo.svg' %}" alt="Logo ESATIC" class="receipt-logo">
+                <h1 class="receipt-title">ESATIC</h1>
+                <p class="receipt-subtitle">École Supérieure Africaine des Technologies de l'Information et de la Communication</p>
+            </div>
+
+            <div class="receipt-body">
+                <!-- Numéro d'inscription -->
+                <div class="receipt-number">
+                    <h2>Reçu d'Inscription</h2>
+                    <div class="number">{{ candidat.numero_inscription }}</div>
+                </div>
+
+                <!-- Informations du candidat -->
+                <div class="info-grid">
+                    <div class="info-section">
+                        <h3>👤 Informations Personnelles</h3>
+                        <div class="info-item">
+                            <span class="info-label">Nom et Prénoms:</span>
+                            <span class="info-value">{{ candidat.nom }} {{ candidat.prenoms }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Email:</span>
+                            <span class="info-value">{{ candidat.email }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Téléphone:</span>
+                            <span class="info-value">{{ candidat.telephone }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Date de naissance:</span>
+                            <span class="info-value">{{ candidat.date_naissance|date:'d/m/Y' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>🎓 Informations Académiques</h3>
+                        <div class="info-item">
+                            <span class="info-label">Concours:</span>
+                            <span class="info-value">{{ candidat.concours_souhaite.nom }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Niveau requis:</span>
+                            <span class="info-value">{{ candidat.concours_souhaite.get_niveau_requis_display }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Frais d'inscription:</span>
+                            <span class="info-value">{{ candidat.concours_souhaite.frais_inscription|floatformat:0 }} FCFA</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Date limite:</span>
+                            <span class="info-value">{{ candidat.concours_souhaite.date_limite|date:'d/m/Y' }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Documents fournis -->
+                <div class="documents-section">
+                    <h3>📄 Documents Fournis</h3>
+                    <ul class="document-list">
+                        {% for d in documents %}
+                            <li class="document-item">
+                                <span class="document-icon">✓</span>
+                                <span>{{ d.get_type_document_display }}</span>
+                            </li>
+                        {% empty %}
+                            <li class="document-item">
+                                <span class="document-icon">⚠</span>
+                                <span>Aucun document fourni</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Statut de l'inscription -->
+                <div class="status-section">
+                    <div class="status-icon">✓</div>
+                    <p class="status-text">Inscription Validée</p>
+                </div>
+
+                <!-- Informations supplémentaires -->
+                <div class="footer-info">
+                    <p><strong>Date d'inscription:</strong> {{ candidat.date_inscription|date:'d/m/Y à H:i' }}</p>
+                    <p>Ce reçu confirme votre inscription au concours. Conservez-le précieusement.</p>
+                    <p><strong>Contact ESATIC:</strong> info@esatic.edu.ci | +225 XX XX XX XX XX</p>
+                    <p><strong>Adresse:</strong> Abidjan, Côte d'Ivoire</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions no-print">
+                    <a href="{% url 'accueil' %}" class="btn ghost">Retour à l'accueil</a>
+                    <button class="btn primary" onclick="printReceipt()">🖨️ Imprimer</button>
+                    <button class="btn cta" onclick="downloadPDF()">📄 Télécharger PDF</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Filigrane pour l'impression -->
+    <div style="display: none;">
+        <div id="watermark" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-45deg); font-size: 72px; color: rgba(14, 90, 167, 0.05); z-index: -1; pointer-events: none;">
+            ESATIC
+        </div>
+    </div>
+</body>
+</html>
